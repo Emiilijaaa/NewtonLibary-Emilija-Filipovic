@@ -12,7 +12,7 @@ using NewtonLibary_Emilija_Filipovic.Data;
 namespace NewtonLibary_Emilija_Filipovic.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231205122736_initial")]
+    [Migration("20231208112758_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -30,29 +30,14 @@ namespace NewtonLibary_Emilija_Filipovic.Migrations
                     b.Property<int>("AuthorsAuthorId")
                         .HasColumnType("int");
 
-                    b.Property<int>("booksBookId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AuthorsAuthorId", "booksBookId");
-
-                    b.HasIndex("booksBookId");
-
-                    b.ToTable("AuthorBook");
-                });
-
-            modelBuilder.Entity("BookBookLoan", b =>
-                {
                     b.Property<int>("BooksBookId")
                         .HasColumnType("int");
 
-                    b.Property<int>("LoansBookLoanId")
-                        .HasColumnType("int");
+                    b.HasKey("AuthorsAuthorId", "BooksBookId");
 
-                    b.HasKey("BooksBookId", "LoansBookLoanId");
+                    b.HasIndex("BooksBookId");
 
-                    b.HasIndex("LoansBookLoanId");
-
-                    b.ToTable("BookBookLoan");
+                    b.ToTable("AuthorBook");
                 });
 
             modelBuilder.Entity("NewtonLibary_Emilija_Filipovic.Model.Author", b =>
@@ -84,50 +69,36 @@ namespace NewtonLibary_Emilija_Filipovic.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
 
-                    b.Property<string>("ISBN")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("BorrowedByBorrowerId")
+                        .HasColumnType("int");
 
-                    b.Property<bool>("IsBorrowed")
-                        .HasColumnType("bit");
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("Isbn")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("ReturnDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Year")
+                        .HasColumnType("int");
 
                     b.Property<int>("YearPublished")
                         .HasColumnType("int");
 
                     b.HasKey("BookId");
 
+                    b.HasIndex("BorrowedByBorrowerId");
+
                     b.ToTable("Books");
-                });
-
-            modelBuilder.Entity("NewtonLibary_Emilija_Filipovic.Model.BookLoan", b =>
-                {
-                    b.Property<int>("BookLoanId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookLoanId"));
-
-                    b.Property<int>("BorrowerId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("LoanDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ReturnDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("BookLoanId");
-
-                    b.HasIndex("BorrowerId");
-
-                    b.ToTable("BookLoans");
                 });
 
             modelBuilder.Entity("NewtonLibary_Emilija_Filipovic.Model.Borrower", b =>
@@ -168,40 +139,18 @@ namespace NewtonLibary_Emilija_Filipovic.Migrations
 
                     b.HasOne("NewtonLibary_Emilija_Filipovic.Model.Book", null)
                         .WithMany()
-                        .HasForeignKey("booksBookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("BookBookLoan", b =>
-                {
-                    b.HasOne("NewtonLibary_Emilija_Filipovic.Model.Book", null)
-                        .WithMany()
                         .HasForeignKey("BooksBookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.HasOne("NewtonLibary_Emilija_Filipovic.Model.BookLoan", null)
+            modelBuilder.Entity("NewtonLibary_Emilija_Filipovic.Model.Book", b =>
+                {
+                    b.HasOne("NewtonLibary_Emilija_Filipovic.Model.Borrower", "BorrowedBy")
                         .WithMany()
-                        .HasForeignKey("LoansBookLoanId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+                        .HasForeignKey("BorrowedByBorrowerId");
 
-            modelBuilder.Entity("NewtonLibary_Emilija_Filipovic.Model.BookLoan", b =>
-                {
-                    b.HasOne("NewtonLibary_Emilija_Filipovic.Model.Borrower", "Borrower")
-                        .WithMany("BookLoans")
-                        .HasForeignKey("BorrowerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Borrower");
-                });
-
-            modelBuilder.Entity("NewtonLibary_Emilija_Filipovic.Model.Borrower", b =>
-                {
-                    b.Navigation("BookLoans");
+                    b.Navigation("BorrowedBy");
                 });
 #pragma warning restore 612, 618
         }

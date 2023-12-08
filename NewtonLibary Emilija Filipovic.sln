@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewtonLibary Emilija Filipovic", "NewtonLibary Emilija Filipovic\NewtonLibary Emilija Filipovic.csproj", "{92EAE8E5-36D9-4BA0-A7C3-45BAEF6E5FF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewtonLibary Emilija Filipovic", "NewtonLibary Emilija Filipovic\NewtonLibary Emilija Filipovic.csproj", "{92EAE8E5-36D9-4BA0-A7C3-45BAEF6E5FF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpers", "..\..\..\OneDrive\Skrivbord\visual studio kod\GU3_Music-main\visual studio kod\GU3_Music-main\Helpers\Helpers.csproj", "{1E7ADAF0-70CE-4CE5-98A2-645D3BA6992B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{92EAE8E5-36D9-4BA0-A7C3-45BAEF6E5FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92EAE8E5-36D9-4BA0-A7C3-45BAEF6E5FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92EAE8E5-36D9-4BA0-A7C3-45BAEF6E5FF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E7ADAF0-70CE-4CE5-98A2-645D3BA6992B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E7ADAF0-70CE-4CE5-98A2-645D3BA6992B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E7ADAF0-70CE-4CE5-98A2-645D3BA6992B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E7ADAF0-70CE-4CE5-98A2-645D3BA6992B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

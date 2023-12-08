@@ -23,4 +23,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\OneDrive\Skrivbord\visual studio kod\GU3_Music-main\visual studio kod\GU3_Music-main\Helpers\Helpers.csproj" />
+  </ItemGroup>
+
 </Project>
