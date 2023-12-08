@@ -38,7 +38,7 @@ namespace NewtonLibary_Emilija_Filipovic.Data
                     Book book = new Book();
                     book.Year = rnd.Next(1900, 2023);
                     book.Rating = rnd.Next(1, 10);
-                    
+
 
 
                     book.Title = GetEnumDescription(rnd.FromEnum<BookTitles>());
