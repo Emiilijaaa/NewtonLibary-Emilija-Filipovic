@@ -5,8 +5,18 @@ using Helpers;
 
 namespace NewtonLibary_Emilija_Filipovic.Data
 {
-    public class DataAcces
+
+     public static class StringExtensions
+{
+    public static string[] SplitCamelCase(this string input)
     {
+        return System.Text.RegularExpressions.Regex.Split(input, @"(?<!^)(?=[A-Z])");
+    }
+}
+
+
+   public class DataAccess
+  {
 
         public enum BookTitles
         {
@@ -15,9 +25,13 @@ namespace NewtonLibary_Emilija_Filipovic.Data
             [Description("Titanic")] James, Cameron, [Description("Hungergames 1")] Garry, Ros, [Description("Alfons Åberg")] Gunnilla, Bergström, [Description("A star is born")] Emilija, Filipovic, [Description("The Hobbit")] Peter, Jacksson,
             [Description("Babblarna")] Agnes, Åkerlind, [Description("Gossip Girl")] Stephanie, Savage, [Description("Gåsmamman")] Camilla, Ahlgren, [Description("Johan Falk")] Jacob, Eklund, [Description("Mr Bean")] Rowan, Atickson
         }
-       
-       
-        
+
+        //public enum AuthorNames
+        //{
+        //    JohnDoe, JaneSmith, AstridLindgren, EmilijaFilipovic, ZlatanIbrahimovic, HannesHolm, GunillaBergström, PärLagerqvist, SelmaLagerlöf
+        //    // Lägg till fler författarnamn här
+        //}
+
         public csSeedGenerator rnd = new csSeedGenerator();
 
         public void CreateFiller()
@@ -127,7 +141,6 @@ namespace NewtonLibary_Emilija_Filipovic.Data
         //}
 
 
-
         public void MarkBookAsNotLoaned(int bookId)
         {
             using (var context = new Context())
@@ -150,8 +163,9 @@ namespace NewtonLibary_Emilija_Filipovic.Data
             }
         }
 
+      
 
-        public void AddPersonToDatabase(string firstName, string lastName)
+        public void AddBarrowerToDatabase(string firstName, string lastName)  
         {
             using (var context = new Context())
             {
@@ -165,27 +179,68 @@ namespace NewtonLibary_Emilija_Filipovic.Data
                 context.SaveChanges();
             }
         }
+        public void RemoveBorrower(int borrowerId)
+        {
+            using (var context = new Context())
+            {
+                var borrowerToRemove = context.Borrowers.Find(borrowerId);
 
-        //public void AddBookToDatabase(string title, params int[] autorIds)
+                if (borrowerToRemove != null)
+                {
+                    context.Borrowers.Remove(borrowerToRemove);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Console.WriteLine($"No Borrower found with ID: {borrowerId}");
+                }
+            }
+        }
+        //public void AddAuthorToDatabase(AuthorNames authorName)
         //{
         //    using (var context = new Context())
         //    {
-        //        var autors = context.Authors.Where(a => autorIds.Contains(a.AuthorId)).ToList();
+        //        string[] fullName = authorName.ToString().SplitCamelCase(); // Använd en anpassad metod för att splitta camel case
 
-        //        var book = new Book
+        //        var author = new Model.Author
         //        {
-        //            Title = title,
-        //            Authors = autors,
-        //            Rating =new Random().Next(1 - 10),
-        //            Year = new Random().Next(1900, 2023)
-
+        //            FirstName = fullName[0],
+        //            LastName = fullName.Length > 1 ? fullName[1] : string.Empty
         //        };
 
-        //        context.Books.Add(book);
+        //        context.Authors.Add(author);
         //        context.SaveChanges();
+
         //    }
         //}
-        public void AddBookToDatabase(string title, params int[] authorIds)
+        //private static string[] SplitCamelCase(this string input)
+        //{
+        //    return System.Text.RegularExpressions.Regex.Split(input, @"(?<!^)(?=[A-Z])");
+        //}
+    
+
+
+
+//public void AddBookToDatabase(string title, params int[] autorIds)
+//{
+//    using (var context = new Context())
+//    {
+//        var autors = context.Authors.Where(a => autorIds.Contains(a.AuthorId)).ToList();
+
+//        var book = new Book
+//        {
+//            Title = title,
+//            Authors = autors,
+//            Rating =new Random().Next(1 - 10),
+//            Year = new Random().Next(1900, 2023)
+
+//        };
+
+//        context.Books.Add(book);
+//        context.SaveChanges();
+//    }
+//}
+public void AddBookToDatabase(string title, params int[] authorIds)
         {
             using (var context = new Context())
             {
@@ -204,6 +259,54 @@ namespace NewtonLibary_Emilija_Filipovic.Data
             }
         }
 
+        public void RemoveBook(int bookId)
+        {
+            using (var context = new Context())
+            {
+                var bookToRemove = context.Books.Find(bookId);
+
+                if (bookToRemove != null)
+                {
+                    context.Books.Remove(bookToRemove);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Console.WriteLine($"No Book found with ID: {bookId}");
+                }
+            }
+        }
+        public void AddAuthorToDatabase(string firstName, string lastName)
+        {
+            using (var context = new Context())
+            {
+                var author = new Model.Author
+                {
+                    FirstName = firstName,
+                    LastName = lastName
+                };
+
+                context.Authors.Add(author);
+                context.SaveChanges();
+            }
+        }
+        public void RemoveAuthor(int authorId)
+        {
+            using (var context = new Context())
+            {
+                var authorToRemove = context.Authors.Find(authorId);
+
+                if (authorToRemove != null)
+                {
+                    context.Authors.Remove(authorToRemove);
+                    context.SaveChanges();
+                }
+                else
+                {
+                    Console.WriteLine($"No Author found with ID: {authorId}");
+                }
+            }
+        }
 
 
 
