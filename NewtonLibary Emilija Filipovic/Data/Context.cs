@@ -15,10 +15,9 @@ namespace NewtonLibary_Emilija_Filipovic.Data
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Borrower> Borrowers { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
 
-        }
+       
+      
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -6,17 +6,10 @@ using Helpers;
 namespace NewtonLibary_Emilija_Filipovic.Data
 {
 
-     public static class StringExtensions
-{
-    public static string[] SplitCamelCase(this string input)
+
+
+   public class DataAccess 
     {
-        return System.Text.RegularExpressions.Regex.Split(input, @"(?<!^)(?=[A-Z])");
-    }
-}
-
-
-   public class DataAccess
-  {
 
         public enum BookTitles
         {
@@ -26,11 +19,7 @@ namespace NewtonLibary_Emilija_Filipovic.Data
             [Description("Babblarna")] Agnes, Åkerlind, [Description("Gossip Girl")] Stephanie, Savage, [Description("Gåsmamman")] Camilla, Ahlgren, [Description("Johan Falk")] Jacob, Eklund, [Description("Mr Bean")] Rowan, Atickson
         }
 
-        //public enum AuthorNames
-        //{
-        //    JohnDoe, JaneSmith, AstridLindgren, EmilijaFilipovic, ZlatanIbrahimovic, HannesHolm, GunillaBergström, PärLagerqvist, SelmaLagerlöf
-        //    // Lägg till fler författarnamn här
-        //}
+       
 
         public csSeedGenerator rnd = new csSeedGenerator();
 
@@ -44,6 +33,7 @@ namespace NewtonLibary_Emilija_Filipovic.Data
                 {
                     csSeedGenerator rnd = new csSeedGenerator();
                     Borrower person = new Borrower();
+                    
                     person.LibaryCardNumber = "123";
 
                     person.FirstName = rnd.FirstName;
@@ -53,29 +43,17 @@ namespace NewtonLibary_Emilija_Filipovic.Data
                     book.Year = rnd.Next(1900, 2023);
                     book.Rating = rnd.Next(1, 10);
 
-
-
+                    person.LibaryCardNumber = 
                     book.Title = GetEnumDescription(rnd.FromEnum<BookTitles>());
-
-                    
-                    
-                    /*
-                    autor.FirstName = rnd.FirstName;
-                    autor.LastName = rnd.LastName;
-
-                    context.Borrowers.Add(person);
-                    context.Books.Add(book);
-                    context.Authors.Add(autor);
-                    */
 
 
                 }
 
                 context.SaveChanges();
             }
+
         }
 
-       
         public void BorrowBook(int bookId, int borrowerId)
         {
             using (Context context = new())
@@ -89,7 +67,6 @@ namespace NewtonLibary_Emilija_Filipovic.Data
                     //Set the book as loned
                     book.BorrowedBy = borrower;
                     book.BorrowDate = DateTime.Now;
-                    //book.ReturnTime = DateTime.Now;
 
                     
                     context.SaveChanges();
@@ -118,28 +95,7 @@ namespace NewtonLibary_Emilija_Filipovic.Data
                 }
             }
         }
-        //public void ConnectAuthorAndBook(int authorId, int bookId)
-        //{
-        //    using (var context = new Context())
-        //    {
-        //        // Hämta författaren och boken från databasen
-        //        Author author = context.Authors.Find(authorId);
-        //        Book book = context.Books.Find(bookId);
-        //        context.SaveChanges();
-
-        //        // Kontrollera att både författaren och boken finns
-        //        if (author != null && book != null)
-        //        {
-        //            // Skapa kopplingen mellan författaren och boken
-        //            author.Books.Add(book);
-        //            book.Authors.Add(author);
-
-        //            // Spara ändringarna i databasen
-        //            context.SaveChanges();
-        //        }
-        //    }
-        //}
-
+        
 
         public void MarkBookAsNotLoaned(int bookId)
         {
@@ -149,10 +105,7 @@ namespace NewtonLibary_Emilija_Filipovic.Data
 
                 if (book != null && book.BorrowedBy != null)
                 {
-                    // Update LoanCardId to null, marking the book as not loaned
-                    //book.BookId = null;
-
-                    
+           
                     // If the book was associated with a LoanCard, remove it from the LoanCard's collection
                     book.BorrowedBy = null;
 
@@ -196,51 +149,8 @@ namespace NewtonLibary_Emilija_Filipovic.Data
                 }
             }
         }
-        //public void AddAuthorToDatabase(AuthorNames authorName)
-        //{
-        //    using (var context = new Context())
-        //    {
-        //        string[] fullName = authorName.ToString().SplitCamelCase(); // Använd en anpassad metod för att splitta camel case
-
-        //        var author = new Model.Author
-        //        {
-        //            FirstName = fullName[0],
-        //            LastName = fullName.Length > 1 ? fullName[1] : string.Empty
-        //        };
-
-        //        context.Authors.Add(author);
-        //        context.SaveChanges();
-
-        //    }
-        //}
-        //private static string[] SplitCamelCase(this string input)
-        //{
-        //    return System.Text.RegularExpressions.Regex.Split(input, @"(?<!^)(?=[A-Z])");
-        //}
-    
-
-
-
-//public void AddBookToDatabase(string title, params int[] autorIds)
-//{
-//    using (var context = new Context())
-//    {
-//        var autors = context.Authors.Where(a => autorIds.Contains(a.AuthorId)).ToList();
-
-//        var book = new Book
-//        {
-//            Title = title,
-//            Authors = autors,
-//            Rating =new Random().Next(1 - 10),
-//            Year = new Random().Next(1900, 2023)
-
-//        };
-
-//        context.Books.Add(book);
-//        context.SaveChanges();
-//    }
-//}
-public void AddBookToDatabase(string title, params int[] authorIds)
+        
+        public void AddBookToDatabase(string title, params int[] authorIds)
         {
             using (var context = new Context())
             {
@@ -250,7 +160,7 @@ public void AddBookToDatabase(string title, params int[] authorIds)
                 {
                     Title = title,
                     Authors = authors,
-                    Rating = new Random().Next(1, 11),  // Uppdaterat för att undvika negativa nummer
+                    Rating = new Random().Next(1, 11), 
                     Year = new Random().Next(1900, 2023)
                 };
 
@@ -307,8 +217,6 @@ public void AddBookToDatabase(string title, params int[] authorIds)
                 }
             }
         }
-
-
 
         public void Clear()
         {

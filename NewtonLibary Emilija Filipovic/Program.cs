@@ -13,7 +13,7 @@ namespace NewtonLibary_Emilija_Filipovic
 
             //dataAcces.CreateFiller();  
            //dataAcces.BorrowBook(5, 6); // Låna en bok
-            dataAcces.ReturnBook(5);       // Lämna tilklbaka en bok
+            //dataAcces.ReturnBook(5);       // Lämna tilklbaka en bok
 
             //dataAcces.MarkBookAsNotLoaned(1); // Markera bok som lånad
 
